@@ -20,9 +20,21 @@
                 </v-avatar>
               </template>
               <template #append>
-                <v-btn color="red" icon="mdi-minus" size="small" class="mr-2" @click="editCart(item.product._id, -1)"></v-btn>
+                <v-btn
+                  color="red"
+                  icon="mdi-minus"
+                  size="small"
+                  class="mr-2"
+                  @click="editCart(item.product._id, -1)"
+                ></v-btn>
                 {{ item.quantity }}
-                <v-btn color="green" icon="mdi-plus" size="small" class="ml-2" @click="editCart(item.product._id, 1)"></v-btn>
+                <v-btn
+                  color="green"
+                  icon="mdi-plus"
+                  size="small"
+                  class="ml-2"
+                  @click="editCart(item.product._id, 1)"
+                ></v-btn>
               </template>
             </v-list-item>
             <v-divider v-if="i < cart.length - 1"></v-divider>
@@ -31,7 +43,9 @@
       </v-col>
       <v-col cols="12" class="text-center">
         <p>{{ total }}</p>
-        <v-btn color="primary" :disabled="!canCheckout" @click="checkout">{{ $t('cart.checkout') }}</v-btn>
+        <v-btn color="primary" :disabled="!canCheckout" @click="checkout">{{
+          $t('cart.checkout')
+        }}</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -68,7 +82,7 @@ const total = computed(() => {
 })
 
 const canCheckout = computed(() => {
-  return cart.value.length > 0 && cart.value.every(item => item.product.sell)
+  return cart.value.length > 0 && cart.value.every((item) => item.product.sell)
 })
 
 const editCart = async (product, quantity) => {
@@ -81,8 +95,8 @@ const editCart = async (product, quantity) => {
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
-      }
+        color: 'red',
+      },
     })
   }
 }
@@ -91,14 +105,14 @@ const checkout = async () => {
   try {
     await apiAuth.post('/order')
     user.cart = 0
-    router.push('/order')
+    router.push('/orders')
   } catch (error) {
     console.log(error)
     createSnackbar({
       text: t('api.' + (error?.response?.data?.message || 'unknownError')),
       snackbarProps: {
-        color: 'red'
-      }
+        color: 'red',
+      },
     })
   }
 }
